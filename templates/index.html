@@ -1,0 +1,55 @@
+
+<head>
+
+<title>TODO List</title>
+
+<link href=" {{ url_for('static',filename = 'style.css') }}" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script>
+var i =1;
+	
+	function addList(){
+		var list = document.getElementById("addtext");	
+		var newInput = document.createElement('div');
+        	newInput.innerHTML =  " <input type=\"checkbox\" name=\"a\" style='position:absolute;float:left;'><input type='text' style='' maxlength='50' id="+i+" name=input"+i+ ">";
+        	list.appendChild(newInput);	
+        	 newInput.focus();
+        	i++;
+	}
+</script>
+
+
+
+</head>
+<body onload="">
+
+	<!-- header starts-->
+	<div id="header-wrap" >		
+
+		<div id="content"><div class="col-one">
+
+			<h2>TODO List</h2>
+
+			<div id="addtext" >
+					<input type="text" name="addList" id="addList" maxlength='80' onclick="javascript:this.value='';">
+					<p></p>
+				<!--	<h2></h2>-->
+				<script>
+				    $("input").keyup(function () {
+				      var value = $(this).val();
+				      $("p").text(value);
+				    }).keyup();
+				</script>
+			</div>
+		</div></div>
+	<!-- header ends here -->
+	</div>
+	
+	<!-- content starts -->
+	<div id="content-outer" class="clear"><div id="content-wrapper">
+
+		
+	</div></div>
+</body>
+</html>
