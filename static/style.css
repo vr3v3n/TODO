@@ -19,12 +19,13 @@ body {
 /* Links */
 a {
 	text-decoration: none;
-	color: #A56F38; 	
+	color: #A56F38;
+	
 }
 a:hover {
 	background: #F0f0f0; 
 	color: #000;
-	border-bottom: 1px dotted #000;
+	
 }
 input { 
 width: 550px; 
@@ -61,8 +62,27 @@ ul, ol {
 	margin: 10px 20px;
 	padding: 0 20px;
 }
-ul { list-style: none; }
+ul {
+	list-style: none;
+	margin-top: 50px;
+}
 
+ul li {
+	
+	width: 400px;
+	padding-bottom: 3px;
+	border-bottom: 1px solid #ebebeb;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding: 10px;
+	font: normal 1.5em Verdana, sans-serif;
+}
+
+
+.todocomplete {
+	text-decoration: line-through;
+}
 
 /* form elements */
 
@@ -104,8 +124,7 @@ input, textarea, select {
 #nav ul li {
 	display: inline;
 	margin: 0; padding: 0;
-	padding-bottom: 3px;
-	border-bottom: 1px solid #ebebeb;
+	
 	
 }
 #nav ul li a {
@@ -126,37 +145,7 @@ input, textarea, select {
 #nav ul li#current a {	
 	color: #000;	
 	background: #d5d3d6 url(nav-current.jpg) repeat-x;
-	border-bottom: 1px solid #CECECE;
-}
-
-#header-wrap h1#logo-text a {
-	position: absolute;
-	margin: 0; padding: 0;
-	font: normal 62px Georgia, 'Times New Roman', Times, serif;
-	letter-spacing: -1.5px;
-	color: #070000;
-	text-decoration: none;
-		
-	/* change the values of top and left to adjust the position of the logo*/
-	top: 135px; left: 48px;	
-}
-#header-wrap h1#logo-text a:hover {
-	background: none;	border: none;
-}
-#header-wrap p#intro {
-	position: absolute;
-	margin: 0; padding: 0;
-	font-family: Georgia, 'Times New Roman', Times, serif;
-	font-weight: normal;
-	font-size: 18px;
-	line-height: 1.6em;
-	font-style: italic;
-	text-transform: none;
-	color: #663333;
-	width: 400px;
 	
-	/* change the values of top and left to adjust the position */
-	top: 205px; left: 60px;		
 }
 
 
@@ -181,7 +170,7 @@ input, textarea, select {
 	border-top: 1px solid #ebebeb;
 	
 }
-.col-one, .col-two, .col-three {
+.col-one,.col-three {
 	padding-bottom: 20px;
 }
 

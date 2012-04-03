@@ -41,25 +41,69 @@ var i =1;
 		
 	}
 	
+	$(document).ready(function() {
+		$('.todo').live('click', function() {
+			$(this).attr('class', 'todocomplete');
+			var n = $('.todocomplete').html()
+			$.ajax({
+				url:"http://localhost:5000/altList",
+				datatype: 'text',
+				type: 'POST',
+				data: {'title': n },
+				success:function(data){
+					return '1'
+				}
+			});
+			return false;
+		});
+		
+		$('.todocomplete').live('click', function() {
+			$(this).attr('class', 'todo');
+			var m = $('.todo').html()
+			$.ajax({
+				url:"http://localhost:5000/undoList",
+				datatype: 'text',
+				type: 'POST',
+				data: {'title': m},
+				success:function(data){
+					return '1'
+				}
+			});
+			return false;
+		});
+		
+		$('#delete').click(function() {
+			console.log($('.todocomplete').length);
+			return false;	
+		});
+	});
+	
+	
 	function showList(){
+		
+				document.getElementById("addList").value = "";
 				$.ajax({
 					url:"http://localhost:5000/showList",
 					dataType: 'text',
 					type :'POST',
 					success : function(data)
 					{
-						var jsonElement = eval(data);
 						
+						var jsonElement = eval(data);
 						$("#List").html("");
-						//document.getElementById("List").innerHTML = "";
 						for(var i =0; i<jsonElement.length;i++){
 							//var listElement =document.createElement('li');
 							//listElement.innerHTML = "<a href='#' onclick=\"javascript:Done("+i+", this);\">"+jsonElement[i]['title']+"</a>";
 							//document.getElementById("List").appendChild(listElement);
-							
+							//alert(jsonElement[0]['done']);
 							var li = $("<li></li>");
+							if(jsonElement[0]['done'] == 1){
+								li.html("*&nbsp&nbsp<a class='todocomplete' href='#'>"+jsonElement[i]['title']+"</a>");
+							}
+							else{
+								li.html("*&nbsp&nbsp<a class='todo' href='#'>"+jsonElement[i]['title']+"</a>");
+							}
 							
-							li.html("<a href='#' onclick=\"javascript:Done("+i+", this);\">"+jsonElement[i]['title']+"</a>");
 							
 							$("#List").append(li);
 							
@@ -75,9 +119,6 @@ var i =1;
 		//alert(element.getParent());
 		//element.style="display:none;";
 		
-		$(element).parent().css({
-			"text-decoration":"line-through"
-		})
 	}
 </script>
 
@@ -91,7 +132,7 @@ var i =1;
 			<h2>TODO List</h2>
 
 			<div id="addtext" >
-					<input type="text" name="addList" id="addList" maxlength='80' onkeyup="javascript:if(event.keyCode == 13){getData();}" onclick="javascript:this.value='';">
+					<input type="text" name="addList" id="addList" maxlength='80' onkeypress="javascript:if(event.keyCode == 13){getData();}" onclick="javascript:this.value='';">
 					
 						<ul id="List">
 							
@@ -107,7 +148,7 @@ var i =1;
 			</div>
 		</div>
 			<div class="col-three">
-			<a href="#" class="float-right" style=\"margin-top:10px;\">delete</a>
+			<a href="#" id="delete" class="float-right" style=\"margin-top:10px;\">delete</a>
 			</div>
 		</div>
 	<!-- header ends here -->

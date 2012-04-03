@@ -45,7 +45,7 @@ def show_list():
         cur = g.db.execute('select * from entries order by id desc')
     #entryDict = {}
     
-        entries = [dict(title=row[1]) for row in cur.fetchall()]
+        entries = [dict(title=row[1],done=row[2]) for row in cur.fetchall()]
         print entries
         #return jsonify(entries)
         return json.dumps(entries)
@@ -56,7 +56,26 @@ def show_list():
 def add_entry():
     if request.method == 'POST':
         g.db.execute('insert into entries(title) values(?)',
-                    [request.form['list']])
+            [request.form['list']]
+        )
+        g.db.commit()
+        return '1'
+    return '0'
+
+
+@app.route('/altList', methods=['POST'])
+def alt_List():
+    if request.method == 'POST':
+        g.db.execute('update entries SET done="1" WHERE title('+request.form['title']+')')
+        g.db.commit()
+        return '1'
+    return '0'
+
+
+@app.route('/undoList', methods=['POST'])
+def undo_List():
+    if request.method == 'POST':
+        g.db.execute('update entries SET done="0" WHERE title(('+request.form['title']+')')
         g.db.commit()
         return '1'
     return '0'
