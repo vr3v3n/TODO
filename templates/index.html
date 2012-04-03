@@ -1,12 +1,18 @@
-
+<!DOCTYPE html>
+<html>
 <head>
-
 <title>TODO List</title>
 
 <link href=" {{ url_for('static',filename = 'style.css') }}" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type=text/javascript
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+{% block body %}
 
-<script>
+<!-- <script>
 var i =1;
 	
 	function addList(){
@@ -17,13 +23,66 @@ var i =1;
         	 newInput.focus();
         	i++;
 	}
+</script>-->
+<script>
+	function getData(){
+		//alert('qqq');
+		var list = document.getElementById('addList').value;
+		$.ajax({
+			url : "http://localhost:5000/addList",
+			dataType: 'text',
+			type : "POST",
+			data : {"list": list},
+			success : function(data)
+			{
+				showList();
+			}
+		});
+		
+	}
+	
+	function showList(){
+				$.ajax({
+					url:"http://localhost:5000/showList",
+					dataType: 'text',
+					type :'POST',
+					success : function(data)
+					{
+						var jsonElement = eval(data);
+						
+						$("#List").html("");
+						//document.getElementById("List").innerHTML = "";
+						for(var i =0; i<jsonElement.length;i++){
+							//var listElement =document.createElement('li');
+							//listElement.innerHTML = "<a href='#' onclick=\"javascript:Done("+i+", this);\">"+jsonElement[i]['title']+"</a>";
+							//document.getElementById("List").appendChild(listElement);
+							
+							var li = $("<li></li>");
+							
+							li.html("<a href='#' onclick=\"javascript:Done("+i+", this);\">"+jsonElement[i]['title']+"</a>");
+							
+							$("#List").append(li);
+							
+							
+						}
+						
+						
+					}
+					
+				});
+	}
+	function Done(id, element){
+		//alert(element.getParent());
+		//element.style="display:none;";
+		
+		$(element).parent().css({
+			"text-decoration":"line-through"
+		})
+	}
 </script>
 
-
-
 </head>
-<body onload="">
-
+<body onload="javascript:showList();">
 	<!-- header starts-->
 	<div id="header-wrap" >		
 
@@ -32,24 +91,31 @@ var i =1;
 			<h2>TODO List</h2>
 
 			<div id="addtext" >
-					<input type="text" name="addList" id="addList" maxlength='80' onclick="javascript:this.value='';">
-					<p></p>
-				<!--	<h2></h2>-->
-				<script>
+					<input type="text" name="addList" id="addList" maxlength='80' onkeyup="javascript:if(event.keyCode == 13){getData();}" onclick="javascript:this.value='';">
+					
+						<ul id="List">
+							
+						</ul>
+					{% endblock %}
+					
+				<!--<script>
 				    $("input").keyup(function () {
 				      var value = $(this).val();
 				      $("p").text(value);
 				    }).keyup();
-				</script>
+				</script>-->
 			</div>
-		</div></div>
+		</div>
+			<div class="col-three">
+			<a href="#" class="float-right" style=\"margin-top:10px;\">delete</a>
+			</div>
+		</div>
 	<!-- header ends here -->
 	</div>
 	
 	<!-- content starts -->
-	<div id="content-outer" class="clear"><div id="content-wrapper">
-
+	<div id="footer-wrapper" class="clear">
 		
-	</div></div>
-</body>
-</html>
+	</div>
+ </body>
+ </html>
