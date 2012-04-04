@@ -38,7 +38,7 @@ def teardown_request(exception):
     g.db.close()
     
 
-
+#show all TODO items 
 @app.route('/showList' , methods=['POST'])
 def show_list():
     if request.method == 'POST':
@@ -47,7 +47,8 @@ def show_list():
         return json.dumps(entries)
     else:
         return '0'
-    
+
+#Add items to the database or list
 @app.route('/addList', methods = ['POST'])
 def add_entry():
     if request.method == 'POST':
@@ -59,6 +60,7 @@ def add_entry():
     return '0'
 
 
+#marked item as done
 @app.route('/altList', methods=['POST'])
 def alt_List():
     if request.method == 'POST':
@@ -68,6 +70,7 @@ def alt_List():
     return '0'
 
 
+#undo the marked item
 @app.route('/undoList', methods=['POST'])
 def undo_List():
     if request.method == 'POST':
@@ -76,6 +79,8 @@ def undo_List():
         return '1'
     return '0'
 
+
+#delete completed items from the list or database
 @app.route('/deleteList', methods=['POST'])
 def del_List():
     if request.method == 'POST':
@@ -91,7 +96,11 @@ def view():
     
     
 if __name__ == '__main__':
-    init_db()
+    
+#calling init_db() to create database on client side
+    init_db() 
+
+#Calling app.run() to start the app
     app.run()
     
 
