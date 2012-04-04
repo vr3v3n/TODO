@@ -8,8 +8,8 @@
 body {
 	font: 11px/165% "Lucida Grande", Geneva, Verdana, Arial, Helvetica, sans-serif;
 	color: #666666; 	
-	margin: 0; padding: 0 0 50px 0; 
-	background: #070707 url(bg.jpg) repeat-x;
+	margin: 0; padding: 0 0 50px 0;
+	background: #f0f0f0 url(bg.jpg) repeat-x;
 	text-align: center;
 }
 
@@ -65,6 +65,7 @@ ul, ol {
 ul {
 	list-style: none;
 	margin-top: 50px;
+	list-style-image:url('dot.png');
 }
 
 ul li {
@@ -77,13 +78,16 @@ ul li {
 	margin-top: 10px;
 	padding: 10px;
 	font: normal 1.5em Verdana, sans-serif;
+	text-align:justify;
 }
 
 
 .todocomplete {
 	text-decoration: line-through;
 }
-
+.todo {
+	text-decoration: none;
+}
 /* form elements */
 
 label {

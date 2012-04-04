@@ -43,11 +43,7 @@ def teardown_request(exception):
 def show_list():
     if request.method == 'POST':
         cur = g.db.execute('select * from entries order by id desc')
-    #entryDict = {}
-    
         entries = [dict(title=row[1],done=row[2]) for row in cur.fetchall()]
-        print entries
-        #return jsonify(entries)
         return json.dumps(entries)
     else:
         return '0'
@@ -66,7 +62,7 @@ def add_entry():
 @app.route('/altList', methods=['POST'])
 def alt_List():
     if request.method == 'POST':
-        g.db.execute('update entries SET done="1" WHERE title('+request.form['title']+')')
+        g.db.execute('update entries SET done="1" WHERE title="'+request.form['title']+'"')
         g.db.commit()
         return '1'
     return '0'
@@ -75,11 +71,18 @@ def alt_List():
 @app.route('/undoList', methods=['POST'])
 def undo_List():
     if request.method == 'POST':
-        g.db.execute('update entries SET done="0" WHERE title(('+request.form['title']+')')
+        g.db.execute('update entries SET done="0" WHERE title="'+request.form['title']+'"')
         g.db.commit()
         return '1'
     return '0'
 
+@app.route('/deleteList', methods=['POST'])
+def del_List():
+    if request.method == 'POST':
+        g.db.execute('DELETE FROM entries WHERE done="1"')
+        g.db.commit()        
+        return '1'
+    return '0'
 
 #add template paths and rendering it
 @app.route('/')

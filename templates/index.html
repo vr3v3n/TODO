@@ -44,36 +44,58 @@ var i =1;
 	$(document).ready(function() {
 		$('.todo').live('click', function() {
 			$(this).attr('class', 'todocomplete');
-			var n = $('.todocomplete').html()
-			$.ajax({
-				url:"http://localhost:5000/altList",
-				datatype: 'text',
-				type: 'POST',
-				data: {'title': n },
-				success:function(data){
-					return '1'
-				}
+			var n = [];
+			$('.todocomplete').each(function(i){
+							
+				n[i] = $(this).html()
+				$.ajax({
+					url:"http://localhost:5000/altList",
+					datatype: 'text',
+					type: 'POST',
+					data: {'title': n[i] },
+					success:function(data){
+						return '1'
+					}
+				});
+				
 			});
+			
 			return false;
 		});
 		
 		$('.todocomplete').live('click', function() {
 			$(this).attr('class', 'todo');
-			var m = $('.todo').html()
-			$.ajax({
-				url:"http://localhost:5000/undoList",
-				datatype: 'text',
-				type: 'POST',
-				data: {'title': m},
-				success:function(data){
-					return '1'
-				}
+			var m = [];
+			$('.todo').each(function(i){
+				
+				m[i] = $(this).html()
+				$.ajax({
+					url:"http://localhost:5000/undoList",
+					datatype: 'text',
+					type: 'POST',
+					data: {'title': m[i]},
+					success:function(data){
+						return '1'
+					}
+				});
+				
 			});
+			
 			return false;
 		});
 		
 		$('#delete').click(function() {
-			console.log($('.todocomplete').length);
+			
+			$.ajax({
+					url:"http://localhost:5000/deleteList",
+					datatype: 'text',
+					type: 'POST',
+					success:function(data){
+						
+						showList();
+					}			
+			});
+			
 			return false;	
 		});
 	});
@@ -97,11 +119,11 @@ var i =1;
 							//document.getElementById("List").appendChild(listElement);
 							//alert(jsonElement[0]['done']);
 							var li = $("<li></li>");
-							if(jsonElement[0]['done'] == 1){
-								li.html("*&nbsp&nbsp<a class='todocomplete' href='#'>"+jsonElement[i]['title']+"</a>");
+							if(jsonElement[i]['done'] == 1){
+								li.html("&nbsp&nbsp<a class='todocomplete' href='#'>"+jsonElement[i]['title']+"</a>");
 							}
 							else{
-								li.html("*&nbsp&nbsp<a class='todo' href='#'>"+jsonElement[i]['title']+"</a>");
+								li.html("&nbsp&nbsp<a class='todo' href='#'>"+jsonElement[i]['title']+"</a>");
 							}
 							
 							
@@ -148,6 +170,7 @@ var i =1;
 			</div>
 		</div>
 			<div class="col-three">
+			<a href="http://in.linkedin.com/pub/varun-rana/20/7b1/441" class="float-left" style=\"margin-top:10px;\">Developed By : Varun Rana</a>
 			<a href="#" id="delete" class="float-right" style=\"margin-top:10px;\">delete</a>
 			</div>
 		</div>
