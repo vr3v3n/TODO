@@ -79,6 +79,7 @@ ul li {
 	padding: 10px;
 	font: normal 1.5em Verdana, sans-serif;
 	text-align:justify;
+	word-wrap:break-word;
 }
 
 
